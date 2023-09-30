@@ -33,7 +33,6 @@ android {
                 groupId = 'io.bayat'
                 artifactId = 'android.social.sharing'
                 version = '1.0.0'
-
                 afterEvaluate {
                     from components.release
                 }
