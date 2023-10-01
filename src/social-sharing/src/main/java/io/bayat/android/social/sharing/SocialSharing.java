@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 
 import androidx.annotation.Keep;
 import androidx.annotation.Nullable;
@@ -13,7 +14,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 /**
- * Created by Nicholas Sheehan on 28/05/2018.
+ * A simple social sharing API.
  */
 @Keep
 public class SocialSharing {
@@ -48,18 +49,29 @@ public class SocialSharing {
             }
         }
 
+        /**
+         * Uses single send action.
+         */
         @Keep
         public Builder useSingle() {
             this.isMultiple = false;
             return this;
         }
 
+        /**
+         * Uses multi send action.
+         */
         @Keep
         public Builder useMultiple() {
-            this.isMultiple = true;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.DONUT) {
+                this.isMultiple = true;
+            }
             return this;
         }
 
+        /**
+         * Sets the text to be shared.
+         */
         @Keep
         public Builder setText(String text) {
             throwIfUnspecified();
@@ -67,6 +79,9 @@ public class SocialSharing {
             return this;
         }
 
+        /**
+         * Sets the URI to the file or image.
+         */
         @Keep
         public Builder setUri(Uri uri) {
             throwIfUnspecified();
@@ -74,6 +89,9 @@ public class SocialSharing {
             return this;
         }
 
+        /**
+         * Adds the URI for the file or image if using multi send action
+         */
         @Keep
         public Builder addUri(Uri uri) {
             throwIfUnspecified();
@@ -81,6 +99,9 @@ public class SocialSharing {
             return this;
         }
 
+        /**
+         * Sets the mime type for this sharing (used for the URIs)
+         */
         @Keep
         public Builder setType(String mimeType) {
             throwIfUnspecified();
@@ -88,6 +109,9 @@ public class SocialSharing {
             return this;
         }
 
+        /**
+         * Sets whether to use rich preview or not.
+         */
         @Keep
         public Builder setUseRichPreview(Boolean value) {
             throwIfUnspecified();
@@ -95,12 +119,18 @@ public class SocialSharing {
             return this;
         }
 
+        /**
+         * Sets whether to use sharesheet or not.
+         */
         @Keep
         public Builder setUseSharesheet(@Nullable Boolean value) {
             this.useSharesheet = value;
             return this;
         }
 
+        /**
+         * Sets the sharesheet title.
+         */
         @Keep
         public Builder setSharesheetTitle(String title) {
             this.title = title;
@@ -112,7 +142,7 @@ public class SocialSharing {
             throwIfUnspecified();
 
             Intent intent = new Intent();
-            if (this.isMultiple != null && this.isMultiple) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.DONUT && this.isMultiple != null && this.isMultiple) {
                 intent.setAction(Intent.ACTION_SEND_MULTIPLE);
                 if (this.uris != null && this.uris.size() > 0) {
                     intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, this.uris);
@@ -143,11 +173,19 @@ public class SocialSharing {
     @Keep
     protected Intent intent;
 
+    /**
+     * Creates a new instance of SocialSharing class.
+     * @param intent The share intent
+     */
     @Keep
     public SocialSharing(Intent intent) {
         this.intent = intent;
     }
 
+    /**
+     * Sends the sharing intent using the given activity
+     * @param activity The activity to use to send the intent with
+     */
     @Keep
     public void send(Activity activity) {
         activity.startActivity(this.intent);

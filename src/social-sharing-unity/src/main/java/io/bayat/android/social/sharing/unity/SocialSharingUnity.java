@@ -13,6 +13,9 @@ import java.io.File;
 
 import io.bayat.android.social.sharing.SocialSharing;
 
+/**
+ * A simple social sharing API that includes convenience for Unity Android JNI.
+ */
 @Keep
 public class SocialSharingUnity extends SocialSharing {
 
@@ -43,11 +46,19 @@ public class SocialSharingUnity extends SocialSharing {
         super(intent);
     }
 
+    /**
+     * Sends the intent using Unity Player's current activity.
+     */
     @Keep
     public void send() {
         super.send(UnityPlayer.currentActivity);
     }
 
+    /**
+     * Gets the URI to the Unity file path.
+     * @param path The file path
+     * @return Returns the URI to the file path
+     */
     @Keep
     public static Uri getUriFromPathUnity(String path) {
         Context unityContext = UnityPlayer.currentActivity.getApplicationContext();
