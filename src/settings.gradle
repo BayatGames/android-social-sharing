@@ -12,7 +12,8 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "Social Sharing"
+//rootProject.name = "android-social-sharing"
+include ':app'
 include ':social-sharing'
 include ':social-sharing-unity'
 include ':unity-player'
