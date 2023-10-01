@@ -1,6 +1,6 @@
 # Android Social Sharing Library
 
-A social sharing library for Android
+A social sharing library for Android, maintained by [Bayat][bayat]
 
 ## Features
 
@@ -12,13 +12,18 @@ A social sharing library for Android
 - Supports binary content (such as images)
 - Supports custom mime type
 - Aimed for JNI and native bridge usages
+- Available on Maven Central, Jitpack and GitHub packages
 
 ## Installation
 
 ### Gradle
 
 ```groovy
-implementation "io.bayat.android:social-sharing-unity:1.0.0"
+dependencies {
+    implementation "io.bayat.android:social-sharing-unity:1.0.0"
+
+    ... // Other dependencies
+}
 ```
 
 ### Unity
@@ -78,15 +83,31 @@ SocialSharing sharing = new SocialSharing.Builder()
         .build();
 ```
 
+## Notes
+
+The `setText` method sets a prefilled text to be shared by the user, but some social platforms do not support it, mainly **Facebook** amd all of their other various social services including **Instagram**, **Messenger**, **WhatsApp** and **Facebook Lite**, but other platforms such as **Twitter**, **Discord**, **Slack** and others support it. (this won't have any issues on your app, it will just ignore the text and share the content without it)
+
+[Learn more on Meta Platform Terms](https://developers.facebook.com/terms/) and [Platform Policy 2.3 Example and Explanation](https://developers.facebook.com/docs/apps/review/prefill)
+
+## Changelog
+
+Check the [CHANGELOG.md][changelog] file for more information.
+
 ## Resources
 
 - [Android - Send simple data to other apps](https://developer.android.com/training/sharing/send)
 - [Call Java and Kotlin plug-in code from C# scripts](https://docs.unity3d.com/Manual/android-plugins-java-code-from-c-sharp.html)
+- [NicholasSheehan/Unity-Native-Sharing](https://github.com/NicholasSheehan/Unity-Native-Sharing)
 
 ## License
 
-Check the [LICENSE](https://github.com/BayatGames/android-social-sharing/blob/main/LICENSE) file for more information.
+Check the [LICENSE][license] file for more information.
 
 ## Credits
 
-Made with ❤️ by Bayat
+Made with ❤️ by [Bayat](bayat)
+
+[changelog]: ../blob/main/CHANGELOG.md
+[license]: ../blob/main/LICENSE
+[bayat]: https://bayat.io
+[bayatgames]: https://github.com/BayatGames
