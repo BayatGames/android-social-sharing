@@ -85,8 +85,6 @@ afterEvaluate {
     }
 }
 
-println rootProject.ext["signing.key"]
-
 signing {
     useInMemoryPgpKeys(
             rootProject.ext["signing.keyId"],

@@ -16,7 +16,15 @@ A social sharing library for Android, maintained by [Bayat][bayat]
 
 ## Installation
 
-### Gradle
+Artifact is available on Maven Central, Jitpack and GitHub packages.
+
+```groovy
+io.bayat.android:social-sharing-unity:1.0.0
+```
+
+### Gradle Setup
+
+- Add as a dependency:
 
 ```groovy
 dependencies {
@@ -26,7 +34,7 @@ dependencies {
 }
 ```
 
-### Unity
+### Unity Setup
 
 1. Install [External Dependency Manager for Unity](https://github.com/googlesamples/unity-jar-resolver)
 2. Add the dependency to your dependencies xml file to your Unity project:
@@ -43,6 +51,8 @@ dependencies {
 
 ## Usage
 
+### Android Usage
+
 Use the `SocialSharing.Builder` to create a `SocialSharing` instance:
 
 ```java
@@ -58,30 +68,92 @@ SocialSharing sharing = new SocialSharing.Builder()
 - **Sharesheet**: Call `setUseSharesheet(true)` to use Android's Sharesheet:
 
 ```java
-String mimeType = "text/plain";
+String mimeType = "image/jpeg";
 String message = "Hello World";
 SocialSharing sharing = new SocialSharing.Builder()
         .useSingle()
         .setText(message)
         .setUseRichPreview(true)
         .setUseSharesheet(true)
+        .setUri(Uri.fromFile(new File("/sdcard/cats.jpg"))
         .setType(mimeType)
         .build();
+
+// Call send method
+sharing.send(myActivity);
 ```
 
 - **Basic**: Call `setUseSharesheet(false)` to use basic sharing:
 
 ```java
-String mimeType = "text/plain";
+String mimeType = "image/jpeg";
 String message = "Hello World";
 SocialSharing sharing = new SocialSharing.Builder()
         .useSingle()
         .setText(message)
         .setUseRichPreview(true)
         .setUseSharesheet(false)
+        .setUri(Uri.fromFile(new File("/sdcard/cats.jpg"))
         .setType(mimeType)
         .build();
+
+// Call send method
+sharing.send(myActivity);
 ```
+
+### Unity Usage
+
+The `SocialSharingUnity` extends from `SocialSharing` so it extends the `Builder` too, the only difference are the URI and the `send` method:
+
+```java
+String mimeType = "image/jpeg";
+String message = "Hello World";
+SocialSharingUnity sharing = new SocialSharingUnity.Builder()
+        .useSingle()
+        .setText(message)
+        .setUseRichPreview(true)
+        .setUseSharesheet(false)
+        .setUnityUri("myscreenshot.jpg")
+        .setType(mimeType)
+        .build();
+
+// Call send method, the activity parameter is not required as the SocialSharingUnity will use the current activity of UnityPlayer
+sharing.send();
+```
+
+Also for JNI use cases, use this class and the methods of `setUnityUri` and `addUnityUri` for specifying files and content to be shared instead of `setUri` or `addUri`.
+
+## API
+
+### SocialSharing
+
+- `send(Activity activity)`: Send the content to be shared using the given Activity
+
+#### SocialSharing.Builder
+
+- `useSingle()`: Use single sharing
+- `useMultiple()`: Use multiple sharing
+- `setText(String text)`: Set the text to be shared
+- `setUri(Uri uri)`: Set the URI of the content to be shared
+- `setUriFromString(String uriString)`: Set the URI of the content to be shared from a string
+- `addUri(Uri uri)`: Add a URI to the content to be shared
+- `addUriFromString(String uriString)`: Add a URI to the content to be shared from a string
+- `setUseRichPreview(boolean useRichPreview)`: Set whether to use rich preview or not
+- `setUseSharesheet(boolean useSharesheet)`: Set whether to use sharesheet or not
+- `setSharesheetTitle(String title)`: Set the sharesheet title
+- `setType(String type)`: Set the mime type of the content to be shared
+- `build()`: Build the `SocialSharing` instance
+
+### SocialSharingUnity
+
+- `send()`: Send the content to be shared (uses UnityPlayer.currentActivity as the Activity)
+
+#### SocialSharingUnity.Builder
+
+Extends from `SocialSharing.Builder` and adds the following methods:
+
+- `setUnityUri(String unityUri)`: Set the URI of the content to be shared from a Unity (resolves the file path to a content URI in Android)
+- `addUnityUri(String unityUri)`: Add a URI to the content to be shared from a Unity (resolves the file path to a content URI in Android)
 
 ## Notes
 

@@ -25,6 +25,10 @@ public class SocialSharingUnity extends SocialSharing {
     @Keep
     public static class Builder extends SocialSharing.Builder {
 
+        /**
+         * Sets the URI using Unity's FileProvider that resolves the path to URI.
+         * @param path The path to be resolved
+         */
         @Keep
         public Builder setUnityUri(String path) {
             Uri uri = getUriFromPathUnity(path);
@@ -32,6 +36,10 @@ public class SocialSharingUnity extends SocialSharing {
             return this;
         }
 
+        /**
+         * Adds a URI using Unity's FileProvider that resolves the path to URI.
+         * @param path The path to be resolved
+         */
         @Keep
         public Builder addUnityUri(String path) {
             Uri uri = getUriFromPathUnity(path);

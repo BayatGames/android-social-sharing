@@ -90,11 +90,30 @@ public class SocialSharing {
         }
 
         /**
+         * Sets the URI from string.
+         * @param uriString The URI string to be parsed
+         */
+        public Builder setUriFromString(String uriString) {
+            this.uri = Uri.parse(uriString);
+            return this;
+        }
+
+        /**
          * Adds the URI for the file or image if using multi send action
          */
         @Keep
         public Builder addUri(Uri uri) {
             throwIfUnspecified();
+            this.uris.add(uri);
+            return this;
+        }
+
+        /**
+         * Adds a URI from string.
+         * @param uriString The URI string to be parsed
+         */
+        public Builder addUriFromString(String uriString) {
+            Uri uri = Uri.parse(uriString);
             this.uris.add(uri);
             return this;
         }
