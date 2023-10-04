@@ -22,7 +22,7 @@ Artifact is available on Maven Central, Jitpack and GitHub packages.
 
 ```groovy
 io.bayat.android:social-sharing:1.0.0
-io.bayat.android:social-sharing-unity:1.0.0
+io.bayat.android:social-sharing-unity:1.0.2
 ```
 
 ### Gradle Setup
@@ -45,7 +45,7 @@ dependencies {
     ```xml
     <dependencies>
         <androidPackages>
-            <androidPackage spec="io.bayat.android:social-sharing-unity:1.0.0" />
+            <androidPackage spec="io.bayat.android:social-sharing-unity:1.0.2" />
         </androidPackages>
     </dependencies>
     ```
