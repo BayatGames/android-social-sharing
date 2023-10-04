@@ -14,7 +14,7 @@ A social sharing library for Android, maintained by [Bayat][bayat]
 - Supports binary content (such as images)
 - Supports custom mime type
 - Aimed for JNI and native bridge usages
-- Available on Maven Central, Jitpack and GitHub packages
+- Available on Maven Central and GitHub packages
 
 ## Installation
 
@@ -106,7 +106,7 @@ sharing.send(myActivity);
 
 ### Unity Usage
 
-The `SocialSharingUnity` extends from `SocialSharing` so it extends the `Builder` too, the only difference are the URI and the `send` method:
+The `SocialSharingUnity` extends from `SocialSharing` so it extends the `Builder` too, the only differences are the URI and the `send` method:
 
 ```java
 String mimeType = "image/jpeg";
