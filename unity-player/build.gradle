@@ -37,3 +37,5 @@ dependencies {
     // compileOnly exposes the jar's functionality during development but won't package it along with the built plugin.
     compileOnly files ('libs/unity.jar')
 }
+
+tasks.withType(PublishToMavenRepository).configureEach { it.enabled = false }
