@@ -29,6 +29,9 @@ jobs:
           distribution: adopt
           java-version: 11
 
+      - name: Validate Gradle wrapper
+        uses: gradle/wrapper-validation-action@v1
+
         # Builds the release artifacts of the library
       - name: Release build
         run: ./src/gradlew assembleRelease -x :app:assembleRelease
@@ -38,6 +41,11 @@ jobs:
         run: ./src/gradlew androidSourcesJar javadocJar
 
         # Runs upload, and then closes & releases the repository
+      - name: Publish to GitHub Packages
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: publishReleasePublicationToGitHubPackagesRepository
+          
       - name: Publish to MavenCentral
         run: ./src/gradlew publishReleasePublicationToSonatypeRepository --max-workers 1 closeAndReleaseSonatypeStagingRepository
         env:
