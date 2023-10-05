@@ -124,7 +124,29 @@ SocialSharingUnity sharing = new SocialSharingUnity.Builder()
 sharing.send();
 ```
 
-Also for JNI use cases, use this class and the methods of `setUnityUri` and `addUnityUri` for specifying files and content to be shared instead of `setUri` or `addUri`.
+Also for JNI use cases, use this class and the methods of `setUnityUri` and `addUnityUri` for specifying files and content to be shared instead of `setUri` or `addUri`:
+
+```csharp
+const string BuilderClassName = "io.bayat.android.social.sharing.unity.SocialSharingUnity$Builder";
+
+bool useSharesheet = true;
+bool useRichPreview = true;
+string text = "Hello World from Unity!";
+string mimeType = "text/plain";
+
+using (AndroidJavaObject builder = new AndroidJavaObject(BuilderClassName))
+{
+    builder.Call("setUseSharesheet", useSharesheet);
+    builder.Call("setUseRichPreview", useRichPreview);
+    builder.Call("useSingle");
+    builder.Call("setText", text);
+    builder.Call("setType", mimeType);
+    using (AndroidJavaObject unitySharing = builder.Call<AndroidJavaObject>("build"))
+    {
+        unitySharing.Call("send");
+    }
+}
+```
 
 ## API
 
