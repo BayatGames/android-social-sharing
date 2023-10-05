@@ -1,14 +1,4 @@
-## Common changes for all artifacts
-
-### 🐞 Fixed
-
-### ⬆️ Improved
-
-### ✅ Added
-
-### ⚠️ Changed
-
-### ❌ Removed
+# {Date} - {Version}
 
 ## social-sharing
 

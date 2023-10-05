@@ -2,7 +2,7 @@
 
 [![Publish](https://github.com/BayatGames/android-social-sharing/actions/workflows/publish.yml/badge.svg)](https://github.com/BayatGames/android-social-sharing/actions/workflows/publish.yml)
 
-A social sharing library for Android, maintained by [Bayat][bayat]
+A social sharing library for Android.
 
 ## Features
 
@@ -14,7 +14,7 @@ A social sharing library for Android, maintained by [Bayat][bayat]
 - Supports binary content (such as images)
 - Supports custom mime type
 - Aimed for JNI and native bridge usages
-- Available on Maven Central, Jitpack and GitHub packages
+- Available on Maven Central and GitHub packages
 
 ## Installation
 
@@ -106,7 +106,7 @@ sharing.send(myActivity);
 
 ### Unity Usage
 
-The `SocialSharingUnity` extends from `SocialSharing` so it extends the `Builder` too, the only difference are the URI and the `send` method:
+The `SocialSharingUnity` extends from `SocialSharing` so it extends the `Builder` too, the only differences are the URI and the `send` method:
 
 ```java
 String mimeType = "image/jpeg";
@@ -180,9 +180,12 @@ Check the [LICENSE][license] file for more information.
 
 ## Credits
 
-Made with ❤️ by [Bayat](bayat)
+- Developed and maintained by [Hasan Bayat][hasanbayat]
+
+Made with ❤️ by [Bayat][bayat]
 
 [changelog]: ../blob/main/CHANGELOG.md
 [license]: ../blob/main/LICENSE
 [bayat]: https://bayat.io
+[hasanbayat]: https://github.com/hasanbayatme
 [bayatgames]: https://github.com/BayatGames
