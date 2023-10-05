@@ -58,6 +58,10 @@ public class SocialSharingUnity extends SocialSharing {
             return this;
         }
 
+        @Override
+        public SocialSharingUnity build() {
+            return new SocialSharingUnity(buildIntent());
+        }
     }
 
     @Keep

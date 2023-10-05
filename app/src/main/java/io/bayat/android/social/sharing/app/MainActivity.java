@@ -24,6 +24,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import io.bayat.android.social.sharing.SocialSharing;
 import io.bayat.android.social.sharing.app.databinding.ActivityMainBinding;
+import io.bayat.android.social.sharing.unity.SocialSharingUnity;
 
 import android.view.Menu;
 import android.view.MenuItem;

@@ -1,5 +1,17 @@
 # {Date} - {Version}
 
+## Common changes for all artifcats
+
+### 🐞 Fixed
+
+### ⬆️ Improved
+
+### ✅ Added
+
+### ⚠️ Changed
+
+### ❌ Removed
+
 ## social-sharing
 
 ### 🐞 Fixed
