@@ -4,6 +4,8 @@
 
 A social sharing library for Android.
 
+Actively maintained.
+
 ## Features
 
 - Uses Builder pattern
@@ -21,8 +23,8 @@ A social sharing library for Android.
 Artifact is available on Maven Central, Jitpack and GitHub packages.
 
 ```groovy
-io.bayat.android:social-sharing:1.0.0
-io.bayat.android:social-sharing-unity:1.0.2
+io.bayat.android:social-sharing:1.0.6
+io.bayat.android:social-sharing-unity:1.0.6
 ```
 
 ### Gradle Setup
@@ -31,7 +33,7 @@ io.bayat.android:social-sharing-unity:1.0.2
 
 ```groovy
 dependencies {
-    implementation "io.bayat.android:social-sharing:1.0.0"
+    implementation "io.bayat.android:social-sharing:1.0.6"
 
     ... // Other dependencies
 }
@@ -45,7 +47,7 @@ dependencies {
     ```xml
     <dependencies>
         <androidPackages>
-            <androidPackage spec="io.bayat.android:social-sharing-unity:1.0.2" />
+            <androidPackage spec="io.bayat.android:social-sharing-unity:1.0.6" />
         </androidPackages>
     </dependencies>
     ```
@@ -127,7 +129,7 @@ sharing.send();
 Also for JNI use cases, use this class and the methods of `setUnityUri` and `addUnityUri` for specifying files and content to be shared instead of `setUri` or `addUri`:
 
 ```csharp
-const string BuilderClassName = "io.bayat.android.social.sharing.unity.SocialSharingUnity$Builder";
+const string BuilderClassName = "io.bayat.android.social.sharing.unity.SocialSharingUnity$UnityBuilder";
 
 bool useSharesheet = true;
 bool useRichPreview = true;
@@ -136,11 +138,11 @@ string mimeType = "text/plain";
 
 using (AndroidJavaObject builder = new AndroidJavaObject(BuilderClassName))
 {
-    builder.Call("setUseSharesheet", useSharesheet);
-    builder.Call("setUseRichPreview", useRichPreview);
-    builder.Call("useSingle");
-    builder.Call("setText", text);
-    builder.Call("setType", mimeType);
+    builder.Call<AndroidJavaObject>("setText", data.Text);
+    builder.Call<AndroidJavaObject>("setUseSharesheet", this.useSharesheet);
+    builder.Call<AndroidJavaObject>("setUseRichPreview", this.useRichPreview);
+    builder.Call<AndroidJavaObject>("useSingle");
+    builder.Call<AndroidJavaObject>("setType", data.MimeType);
     using (AndroidJavaObject unitySharing = builder.Call<AndroidJavaObject>("build"))
     {
         unitySharing.Call("send");

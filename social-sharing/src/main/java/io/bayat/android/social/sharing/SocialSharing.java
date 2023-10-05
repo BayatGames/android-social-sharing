@@ -136,7 +136,7 @@ public class SocialSharing {
          * Sets whether to use rich preview or not.
          */
         @Keep
-        public Builder setUseRichPreview(Boolean value) {
+        public Builder setUseRichPreview(boolean value) {
             this.useRichPreview = value;
             return this;
         }
@@ -145,7 +145,7 @@ public class SocialSharing {
          * Sets whether to use sharesheet or not.
          */
         @Keep
-        public Builder setUseSharesheet(Boolean value) {
+        public Builder setUseSharesheet(boolean value) {
             this.useSharesheet = value;
             return this;
         }

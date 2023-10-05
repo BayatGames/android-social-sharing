@@ -18,6 +18,8 @@ The date format is `dd/mm/yyyy`.
 
 - Changed `SocialSharing.Builder` so that it is no longer necessary to call `useSingle()` or `useMultiple()` methods, it uses `useSingle()` by default and when you need multiple URIs, call `useMultiple()`
 - Updated `minSdk` to `22` for compliance with Unity
+- Updated `SocialSharing.Builder.setUseSharesheet()` to use primitive boolean type instead of the wrapper
+- Updated `SocialSharing.Builder.setUseRichPreview()` to use primitive boolean type instead of the wrapper
 
 ### ✅ Added
 
