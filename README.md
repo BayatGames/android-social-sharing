@@ -2,7 +2,7 @@
 
 [![Publish](https://github.com/BayatGames/android-social-sharing/actions/workflows/publish.yml/badge.svg)](https://github.com/BayatGames/android-social-sharing/actions/workflows/publish.yml)
 
-A social sharing library for Android, maintained by [Bayat][bayat]
+A social sharing library for Android.
 
 ## Features
 
@@ -180,9 +180,12 @@ Check the [LICENSE][license] file for more information.
 
 ## Credits
 
-Made with ❤️ by [Bayat](bayat)
+- Developed and maintained by [Hasan Bayat][hasanbayat]
+
+Made with ❤️ by [Bayat][bayat]
 
 [changelog]: ../blob/main/CHANGELOG.md
 [license]: ../blob/main/LICENSE
 [bayat]: https://bayat.io
+[hasanbayat]: https://github.com/hasanbayatme
 [bayatgames]: https://github.com/BayatGames

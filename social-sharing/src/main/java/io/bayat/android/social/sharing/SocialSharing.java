@@ -1,16 +1,13 @@
 package io.bayat.android.social.sharing;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 
 import androidx.annotation.Keep;
 import androidx.annotation.Nullable;
-import androidx.core.content.FileProvider;
 
-import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -24,7 +21,7 @@ public class SocialSharing {
 
         @Keep
         @Nullable
-        protected Boolean isMultiple = null;
+        protected Boolean isMultiple = false;
         @Keep
         @Nullable
         protected Boolean useSharesheet = null;
@@ -38,16 +35,10 @@ public class SocialSharing {
         @Keep
         protected String text = null;
         @Keep
-        protected Uri uri = null;
+        protected Uri mainUri = null;
+        protected Uri thumbnailUri = null;
         @Keep
         protected ArrayList<Uri> uris = new ArrayList<>();
-
-        @Keep
-        protected void throwIfUnspecified() throws IllegalStateException {
-            if (this.isMultiple == null) {
-                throw new IllegalStateException("Call useSingle() or useMultiple() first.");
-            }
-        }
 
         /**
          * Uses single send action.
@@ -74,9 +65,25 @@ public class SocialSharing {
          */
         @Keep
         public Builder setText(String text) {
-            throwIfUnspecified();
             this.text = text;
             return this;
+        }
+
+        /**
+         * Sets the thumbnail URI to the file or image for rich preview.
+         */
+        @Keep
+        public Builder setThumbnailUri(Uri uri) {
+            this.thumbnailUri = uri;
+            return this;
+        }
+
+        /**
+         * Sets the thumbnail URI from string.
+         * @param uriString The URI string to be parsed
+         */
+        public Builder setThumbnailUriFromString(String uriString) {
+            return setThumbnailUri(Uri.parse(uriString));
         }
 
         /**
@@ -84,8 +91,7 @@ public class SocialSharing {
          */
         @Keep
         public Builder setUri(Uri uri) {
-            throwIfUnspecified();
-            this.uri = uri;
+            this.mainUri = uri;
             return this;
         }
 
@@ -94,8 +100,7 @@ public class SocialSharing {
          * @param uriString The URI string to be parsed
          */
         public Builder setUriFromString(String uriString) {
-            this.uri = Uri.parse(uriString);
-            return this;
+            return setUri(Uri.parse(uriString));
         }
 
         /**
@@ -103,7 +108,6 @@ public class SocialSharing {
          */
         @Keep
         public Builder addUri(Uri uri) {
-            throwIfUnspecified();
             this.uris.add(uri);
             return this;
         }
@@ -113,9 +117,7 @@ public class SocialSharing {
          * @param uriString The URI string to be parsed
          */
         public Builder addUriFromString(String uriString) {
-            Uri uri = Uri.parse(uriString);
-            this.uris.add(uri);
-            return this;
+            return addUri(Uri.parse(uriString));
         }
 
         /**
@@ -123,7 +125,6 @@ public class SocialSharing {
          */
         @Keep
         public Builder setType(String mimeType) {
-            throwIfUnspecified();
             this.mimeType = mimeType;
             return this;
         }
@@ -133,7 +134,6 @@ public class SocialSharing {
          */
         @Keep
         public Builder setUseRichPreview(Boolean value) {
-            throwIfUnspecified();
             this.useRichPreview = value;
             return this;
         }
@@ -158,8 +158,6 @@ public class SocialSharing {
 
         @Keep
         public SocialSharing build() {
-            throwIfUnspecified();
-
             Intent intent = new Intent();
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.DONUT && this.isMultiple != null && this.isMultiple) {
                 intent.setAction(Intent.ACTION_SEND_MULTIPLE);
@@ -168,15 +166,23 @@ public class SocialSharing {
                 }
             } else {
                 intent.setAction(Intent.ACTION_SEND);
-                if (this.uri != null) {
-                    intent.putExtra(Intent.EXTRA_STREAM, this.uri);
+                if (this.mainUri != null) {
+                    intent.putExtra(Intent.EXTRA_STREAM, this.mainUri);
                 }
-            }
-            if (this.useRichPreview) {
-                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             }
             if (this.text != null) {
                 intent.putExtra(Intent.EXTRA_TEXT, this.text);
+            }
+            if (this.useRichPreview) {
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+                if (this.title != null) {
+                    intent.putExtra(Intent.EXTRA_TITLE, this.title);
+                }
+
+                if (this.thumbnailUri != null) {
+                    intent.setData(this.thumbnailUri);
+                }
             }
             intent.setType(this.mimeType);
 
