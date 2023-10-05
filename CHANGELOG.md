@@ -4,7 +4,7 @@ This changelog follows [keep a changelog](https://keepachangelog.com/) guideline
 
 The date format is `dd/mm/yyyy`.
 
-# 10/5/2023 - 1.0.5
+# 10/5/2023 - 1.0.6
 
 ## social-sharing
 
@@ -12,6 +12,7 @@ The date format is `dd/mm/yyyy`.
 
 - Fixed Sharesheet title
 - Fixed `SocialSharingUnity.Builder`'s `build()` method to return an instance of `SocialSharingUnity` instead of `SocialSharing`
+- Removed `@Nullable` from `setUseSharesheet()` method of `SocialSharing.Builder` class for compliance with Unity
 
 ### ⬆️ Improved
 

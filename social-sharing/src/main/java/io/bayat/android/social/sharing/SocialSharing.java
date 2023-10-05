@@ -145,7 +145,7 @@ public class SocialSharing {
          * Sets whether to use sharesheet or not.
          */
         @Keep
-        public Builder setUseSharesheet(@Nullable Boolean value) {
+        public Builder setUseSharesheet(Boolean value) {
             this.useSharesheet = value;
             return this;
         }
