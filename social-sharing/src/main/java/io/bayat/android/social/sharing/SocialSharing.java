@@ -1,6 +1,9 @@
 package io.bayat.android.social.sharing;
 
 import android.app.Activity;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -157,7 +160,7 @@ public class SocialSharing {
         }
 
         @Keep
-        public SocialSharing build() {
+        protected Intent buildIntent() {
             Intent intent = new Intent();
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.DONUT && this.isMultiple != null && this.isMultiple) {
                 intent.setAction(Intent.ACTION_SEND_MULTIPLE);
@@ -190,7 +193,12 @@ public class SocialSharing {
                 intent = Intent.createChooser(intent, this.title);
             }
 
-            return new SocialSharing(intent);
+            return intent;
+        }
+
+        @Keep
+        public SocialSharing build() {
+            return new SocialSharing(buildIntent());
         }
 
     }
