@@ -1,6 +1,6 @@
 # Android Social Sharing Library
 
-[![Publish](https://github.com/BayatGames/android-social-sharing/actions/workflows/publish.yml/badge.svg)](https://github.com/BayatGames/android-social-sharing/actions/workflows/publish.yml)
+[![Publish](https://github.com/BayatGames/android-social-sharing/actions/workflows/publish.yml/badge.svg)](https://github.com/BayatGames/android-social-sharing/actions/workflows/publish.yml) [![Release](https://jitpack.io/v/BayatGames/android-social-sharing.svg)](https://jitpack.io/#BayatGames/android-social-sharing)
 
 A social sharing library for Android.
 
@@ -14,7 +14,7 @@ A social sharing library for Android.
 - Supports binary content (such as images)
 - Supports custom mime type
 - Aimed for JNI and native bridge usages
-- Available on Maven Central and GitHub packages
+- Available on Maven Central, Jitpack and GitHub packages
 
 ## Installation
 
