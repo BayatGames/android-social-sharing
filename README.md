@@ -23,8 +23,8 @@ Actively maintained.
 Artifact is available on Maven Central, Jitpack and GitHub packages.
 
 ```groovy
-io.bayat.android:social-sharing:1.0.6
-io.bayat.android:social-sharing-unity:1.0.6
+io.bayat.android:social-sharing:1.0.8
+io.bayat.android:social-sharing-unity:1.0.8
 ```
 
 ### Gradle Setup
@@ -33,7 +33,7 @@ io.bayat.android:social-sharing-unity:1.0.6
 
 ```groovy
 dependencies {
-    implementation "io.bayat.android:social-sharing:1.0.6"
+    implementation "io.bayat.android:social-sharing:1.0.8"
 
     ... // Other dependencies
 }
@@ -47,7 +47,7 @@ dependencies {
     ```xml
     <dependencies>
         <androidPackages>
-            <androidPackage spec="io.bayat.android:social-sharing-unity:1.0.6" />
+            <androidPackage spec="io.bayat.android:social-sharing-unity:1.0.8" />
         </androidPackages>
     </dependencies>
     ```
