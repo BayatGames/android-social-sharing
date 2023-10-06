@@ -85,7 +85,7 @@ public class SocialSharingUnity extends SocialSharing {
     @Keep
     public static Uri getUriFromPathUnity(String path) {
         Context unityContext = UnityPlayer.currentActivity.getApplicationContext();
-        return FileProvider.getUriForFile(unityContext, unityContext.getPackageName() + ProviderSuffix, new File(path));
+        return UnityFileProvider.getUriForFile(unityContext, unityContext.getPackageName() + ProviderSuffix, new File(path));
     }
 
 }

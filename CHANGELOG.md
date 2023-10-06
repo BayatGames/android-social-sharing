@@ -2,7 +2,15 @@
 
 This changelog follows [keep a changelog](https://keepachangelog.com/) guidelines and uses [semantic versioning](https://semver.org/).
 
-The date format is `dd/mm/yyyy`.
+The date format is `mm/dd/yyyy`.
+
+# 10/6/2023 - 1.0.9
+
+## social-sharing-unity
+
+### 🐞 Fixed
+
+- Replaced the call to the `FileProvider` in the `getUriFromPathUnity()` method of `SocialSharingUnity` class with `UnityFileProvider`
 
 # 10/5/2023 - 1.0.6
 
