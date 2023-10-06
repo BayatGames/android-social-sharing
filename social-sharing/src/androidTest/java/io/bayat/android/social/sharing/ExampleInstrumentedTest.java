@@ -21,16 +21,13 @@ public class ExampleInstrumentedTest {
     @Test
     public void useAppContext() {
         // Context of the app under test.
-//        Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 //        assertEquals("io.bayat.android.social.sharing.test", appContext.getPackageName());
 
         String mimeType = "text/plain";
         String message = "Hello World";
-        SocialSharing sharing = new SocialSharing.Builder()
-                .useSingle()
+        SocialSharing sharing = new SocialSharing.Builder(appContext)
                 .setText(message)
-                .setUseRichPreview(true)
-                .setUseSharesheet(true)
                 .setType(mimeType)
                 .build();
 

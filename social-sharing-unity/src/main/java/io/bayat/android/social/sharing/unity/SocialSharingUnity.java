@@ -25,15 +25,9 @@ public class SocialSharingUnity extends SocialSharing {
     @Keep
     public static class Builder extends SocialSharing.Builder {
 
-        /**
-         * Sets the thumbnail URI using Unity's FileProvider that resolves the path to URI.
-         * @param path The path to be resolved
-         */
         @Keep
-        public Builder setUnityThumbnailUri(String path) {
-            Uri uri = getUriFromPathUnity(path);
-            setThumbnailUri(uri);
-            return this;
+        public Builder() {
+            super(UnityPlayer.currentActivity);
         }
 
         /**
@@ -41,9 +35,9 @@ public class SocialSharingUnity extends SocialSharing {
          * @param path The path to be resolved
          */
         @Keep
-        public Builder setUnityUri(String path) {
+        public Builder setUnityStream(String path) {
             Uri uri = getUriFromPathUnity(path);
-            setUri(uri);
+            setStream(uri);
             return this;
         }
 
@@ -52,9 +46,9 @@ public class SocialSharingUnity extends SocialSharing {
          * @param path The path to be resolved
          */
         @Keep
-        public Builder addUnityUri(String path) {
+        public Builder addUnityStream(String path) {
             Uri uri = getUriFromPathUnity(path);
-            addUri(uri);
+            addStream(uri);
             return this;
         }
 
