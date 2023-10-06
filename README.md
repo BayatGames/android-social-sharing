@@ -10,21 +10,23 @@ Actively maintained.
 
 - Uses Builder pattern
 - Provides a convenient interface to be used in Unity as a native plugin or JNI
-- Supports Sharesheet
+- Supports Sharesheet/Chooser
 - Supports basic sharing
-- Supports text (prefilled text, some social platforms do not support it)
+- Supports HTML text and literal text (prefilled text, some social platforms do not support it)
 - Supports binary content (such as images)
 - Supports custom mime type
 - Aimed for JNI and native bridge usages
 - Available on Maven Central, Jitpack and GitHub packages
+- Uses [`ShareCompat.IntentBuilder`](https://developer.android.com/reference/androidx/core/app/ShareCompat.IntentBuilder)
+- Provides custom methods for Unity
 
 ## Installation
 
 Artifact is available on Maven Central, Jitpack and GitHub packages.
 
 ```groovy
-io.bayat.android:social-sharing:1.0.9
-io.bayat.android:social-sharing-unity:1.0.9
+io.bayat.android:social-sharing:1.1.0
+io.bayat.android:social-sharing-unity:1.1.0
 ```
 
 ### Gradle Setup
@@ -33,7 +35,7 @@ io.bayat.android:social-sharing-unity:1.0.9
 
 ```groovy
 dependencies {
-    implementation "io.bayat.android:social-sharing:1.0.9"
+    implementation "io.bayat.android:social-sharing:1.1.0"
 
     ... // Other dependencies
 }
@@ -47,7 +49,7 @@ dependencies {
     ```xml
     <dependencies>
         <androidPackages>
-            <androidPackage spec="io.bayat.android:social-sharing-unity:1.0.9" />
+            <androidPackage spec="io.bayat.android:social-sharing-unity:1.1.0" />
         </androidPackages>
     </dependencies>
     ```
@@ -61,11 +63,10 @@ dependencies {
 Use the `SocialSharing.Builder` to create a `SocialSharing` instance:
 
 ```java
-SocialSharing sharing = new SocialSharing.Builder()
-        .useSingle()
+String mimeType = "text/plain";
+String message = "Hello World";
+SocialSharing sharing = new SocialSharing.Builder(myActivity)
         .setText(message)
-        .setUseRichPreview(true)
-        .setUseSharesheet(true)
         .setType(mimeType)
         .build();
 ```
@@ -75,12 +76,9 @@ SocialSharing sharing = new SocialSharing.Builder()
 ```java
 String mimeType = "image/jpeg";
 String message = "Hello World";
-SocialSharing sharing = new SocialSharing.Builder()
-        .useSingle()
+SocialSharing sharing = new SocialSharing.Builder(myActivity)
         .setText(message)
-        .setUseRichPreview(true)
-        .setUseSharesheet(true)
-        .setUri(Uri.fromFile(new File("/sdcard/cats.jpg"))
+        .setStream(Uri.fromFile(new File("/sdcard/cats.jpg"))
         .setType(mimeType)
         .build();
 
@@ -93,12 +91,9 @@ sharing.send(myActivity);
 ```java
 String mimeType = "image/jpeg";
 String message = "Hello World";
-SocialSharing sharing = new SocialSharing.Builder()
-        .useSingle()
+SocialSharing sharing = new SocialSharing.Builder(myActivity)
         .setText(message)
-        .setUseRichPreview(true)
-        .setUseSharesheet(false)
-        .setUri(Uri.fromFile(new File("/sdcard/cats.jpg"))
+        .setStream(Uri.fromFile(new File("/sdcard/cats.jpg"))
         .setType(mimeType)
         .build();
 
@@ -114,11 +109,8 @@ The `SocialSharingUnity` extends from `SocialSharing` so it extends the `Builder
 String mimeType = "image/jpeg";
 String message = "Hello World";
 SocialSharingUnity sharing = new SocialSharingUnity.Builder()
-        .useSingle()
         .setText(message)
-        .setUseRichPreview(true)
-        .setUseSharesheet(false)
-        .setUnityUri("myscreenshot.jpg")
+        .setUnityStream("myscreenshot.jpg")
         .setType(mimeType)
         .build();
 
@@ -126,7 +118,7 @@ SocialSharingUnity sharing = new SocialSharingUnity.Builder()
 sharing.send();
 ```
 
-Also for JNI use cases, use this class and the methods of `setUnityUri` and `addUnityUri` for specifying files and content to be shared instead of `setUri` or `addUri`:
+Also for JNI use cases, use this class and the methods of `setUnityStream` and `addUnityStream` for specifying files and content to be shared instead of `setUri` or `addUri`:
 
 ```csharp
 const string BuilderClassName = "io.bayat.android.social.sharing.unity.SocialSharingUnity$UnityBuilder";
@@ -134,19 +126,17 @@ const string BuilderClassName = "io.bayat.android.social.sharing.unity.SocialSha
 bool useSharesheet = true;
 bool useRichPreview = true;
 string text = "Hello World from Unity!";
-string mimeType = "text/plain";
+string title = "My Custom Chooser Title";
+string imagePath = Application.persistentDataPath + "/screenshot.jpg";
+string mimeType = "image/jpg";
 
 using (AndroidJavaObject builder = new AndroidJavaObject(BuilderClassName))
 {
-    builder.Call<AndroidJavaObject>("setText", data.Text);
-    builder.Call<AndroidJavaObject>("setUseSharesheet", this.useSharesheet);
-    builder.Call<AndroidJavaObject>("setUseRichPreview", this.useRichPreview);
-    builder.Call<AndroidJavaObject>("useSingle");
+    builder.Call<AndroidJavaObject>("setText", text);
+    builder.Call<AndroidJavaObject>("setChooserTitle", title);
+    builder.Call<AndroidJavaObject>("setUnityStream", imagePath);
     builder.Call<AndroidJavaObject>("setType", data.MimeType);
-    using (AndroidJavaObject unitySharing = builder.Call<AndroidJavaObject>("build"))
-    {
-        unitySharing.Call("send");
-    }
+    builder.Call("startChooser");
 }
 ```
 
@@ -158,18 +148,14 @@ using (AndroidJavaObject builder = new AndroidJavaObject(BuilderClassName))
 
 #### SocialSharing.Builder
 
-- `useSingle()`: Use single sharing
-- `useMultiple()`: Use multiple sharing
 - `setText(String text)`: Set the text to be shared
-- `setUri(Uri uri)`: Set the URI of the content to be shared
-- `setUriFromString(String uriString)`: Set the URI of the content to be shared from a string
-- `addUri(Uri uri)`: Add a URI to the content to be shared
-- `addUriFromString(String uriString)`: Add a URI to the content to be shared from a string
-- `setUseRichPreview(boolean useRichPreview)`: Set whether to use rich preview or not
-- `setUseSharesheet(boolean useSharesheet)`: Set whether to use sharesheet or not
-- `setSharesheetTitle(String title)`: Set the sharesheet title
+- `setHtmlText(String htmlText)`: Set the HTML text to be shared (the HTML text is parsed before sharing, useful for formatting)
+- `setStream(Uri uri)`: Set the URI of the content to be shared
+- `addStream(Uri uri)`: Add a URI to the content to be shared
+- `setChoosterTitle(String title)`: Set the sharesheet/chooser title
 - `setType(String type)`: Set the mime type of the content to be shared
 - `build()`: Build the `SocialSharing` instance
+- `startChooser`: Start the sharesheet/chooser activity
 
 ### SocialSharingUnity
 
@@ -179,8 +165,8 @@ using (AndroidJavaObject builder = new AndroidJavaObject(BuilderClassName))
 
 Extends from `SocialSharing.Builder` and adds the following methods:
 
-- `setUnityUri(String unityUri)`: Set the URI of the content to be shared from a Unity (resolves the file path to a content URI in Android)
-- `addUnityUri(String unityUri)`: Add a URI to the content to be shared from a Unity (resolves the file path to a content URI in Android)
+- `setUnityStream(String path)`: Set the URI of the content to be shared from a Unity (resolves the file path to a content URI in Android)
+- `addUnityStream(String path)`: Add a URI to the content to be shared from a Unity (resolves the file path to a content URI in Android)
 
 ## Notes
 

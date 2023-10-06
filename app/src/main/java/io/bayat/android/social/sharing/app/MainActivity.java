@@ -62,13 +62,10 @@ public class MainActivity extends AppCompatActivity {
                         "io.bayat.android.social.sharing.app.provider", //(use your app signature + ".provider" )
                         screenshot);
 
-                SocialSharing sharing = new SocialSharing.Builder()
-                        .useSingle()
+                SocialSharing sharing = new SocialSharing.Builder(activity)
                         .setText("https://developer.android.com/training/sharing/")
-                        .setUseRichPreview(false)
-                        .setUseSharesheet(true)
-                        .setUri(uri)
-                        .setSharesheetTitle("Custom Title")
+                        .setStream(uri)
+                        .setChooserTitle("Custom Title")
                         .setType("image/jpg")
                         .build();
                 sharing.send(activity);

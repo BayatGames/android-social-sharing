@@ -11,6 +11,7 @@ import android.provider.MediaStore;
 
 import androidx.annotation.Keep;
 import androidx.annotation.Nullable;
+import androidx.core.app.ShareCompat;
 
 import java.util.ArrayList;
 
@@ -24,44 +25,11 @@ public class SocialSharing {
     public static class Builder {
 
         @Keep
-        @Nullable
-        protected Boolean isMultiple = false;
-        @Keep
-        @Nullable
-        protected Boolean useSharesheet = null;
-        @Keep
-        protected Boolean useRichPreview = false;
+        protected ShareCompat.IntentBuilder builder;
 
         @Keep
-        protected String mimeType = "*/*";
-        @Keep
-        protected String title = null;
-        @Keep
-        protected String text = null;
-        @Keep
-        protected Uri mainUri = null;
-        protected Uri thumbnailUri = null;
-        @Keep
-        protected ArrayList<Uri> uris = new ArrayList<>();
-
-        /**
-         * Uses single send action.
-         */
-        @Keep
-        public Builder useSingle() {
-            this.isMultiple = false;
-            return this;
-        }
-
-        /**
-         * Uses multi send action.
-         */
-        @Keep
-        public Builder useMultiple() {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.DONUT) {
-                this.isMultiple = true;
-            }
-            return this;
+        public Builder(Context launchingContext) {
+            this.builder = new ShareCompat.IntentBuilder(launchingContext);
         }
 
         /**
@@ -69,59 +37,44 @@ public class SocialSharing {
          */
         @Keep
         public Builder setText(String text) {
-            this.text = text;
+            this.builder.setText(text);
             return this;
         }
 
         /**
-         * Sets the thumbnail URI to the file or image for rich preview.
+         * Sets the HTML text to be shared.
          */
         @Keep
-        public Builder setThumbnailUri(Uri uri) {
-            this.thumbnailUri = uri;
+        public Builder setHtmlText(String htmlText) {
+            this.builder.setHtmlText(htmlText);
             return this;
         }
 
         /**
-         * Sets the thumbnail URI from string.
-         * @param uriString The URI string to be parsed
-         */
-        public Builder setThumbnailUriFromString(String uriString) {
-            return setThumbnailUri(Uri.parse(uriString));
-        }
-
-        /**
-         * Sets the URI to the file or image.
+         * Sets the stream URI to be shared.
          */
         @Keep
-        public Builder setUri(Uri uri) {
-            this.mainUri = uri;
+        public Builder setStream(Uri streamUri) {
+            this.builder.setStream(streamUri);
             return this;
         }
 
         /**
-         * Sets the URI from string.
-         * @param uriString The URI string to be parsed
-         */
-        public Builder setUriFromString(String uriString) {
-            return setUri(Uri.parse(uriString));
-        }
-
-        /**
-         * Adds the URI for the file or image if using multi send action
+         * Adds the stream URI to be shared.
          */
         @Keep
-        public Builder addUri(Uri uri) {
-            this.uris.add(uri);
+        public Builder addStream(Uri streamUri) {
+            this.builder.addStream(streamUri);
             return this;
         }
 
         /**
-         * Adds a URI from string.
-         * @param uriString The URI string to be parsed
+         * Sets the chooser title to be shared.
          */
-        public Builder addUriFromString(String uriString) {
-            return addUri(Uri.parse(uriString));
+        @Keep
+        public Builder setChooserTitle(String title) {
+            this.builder.setChooserTitle(title);
+            return this;
         }
 
         /**
@@ -129,71 +82,19 @@ public class SocialSharing {
          */
         @Keep
         public Builder setType(String mimeType) {
-            this.mimeType = mimeType;
+            this.builder.setType(mimeType);
             return this;
         }
 
-        /**
-         * Sets whether to use rich preview or not.
-         */
         @Keep
-        public Builder setUseRichPreview(boolean value) {
-            this.useRichPreview = value;
-            return this;
-        }
-
-        /**
-         * Sets whether to use sharesheet or not.
-         */
-        @Keep
-        public Builder setUseSharesheet(boolean value) {
-            this.useSharesheet = value;
-            return this;
-        }
-
-        /**
-         * Sets the sharesheet title.
-         */
-        @Keep
-        public Builder setSharesheetTitle(String title) {
-            this.title = title;
-            return this;
+        public void startChooser() {
+            this.builder.startChooser();
         }
 
         @Keep
         protected Intent buildIntent() {
-            Intent intent = new Intent();
-            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.DONUT && this.isMultiple != null && this.isMultiple) {
-                intent.setAction(Intent.ACTION_SEND_MULTIPLE);
-                if (this.uris != null && this.uris.size() > 0) {
-                    intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, this.uris);
-                }
-            } else {
-                intent.setAction(Intent.ACTION_SEND);
-                if (this.mainUri != null) {
-                    intent.putExtra(Intent.EXTRA_STREAM, this.mainUri);
-                }
-            }
-            if (this.text != null) {
-                intent.putExtra(Intent.EXTRA_TEXT, this.text);
-            }
-            if (this.useRichPreview) {
-                if (this.title != null) {
-                    intent.putExtra(Intent.EXTRA_TITLE, this.title);
-                }
-
-                if (this.thumbnailUri != null) {
-                    intent.setData(this.thumbnailUri);
-                }
-            }
-            intent.setType(this.mimeType);
-
-            if (this.useSharesheet == null || this.useSharesheet) {
-                intent = Intent.createChooser(intent, this.title);
-            }
-
-            return intent;
+            return this.builder.getIntent();
+//            return this.builder.createChooserIntent();
         }
 
         @Keep
