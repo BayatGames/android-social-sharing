@@ -36,7 +36,7 @@ dependencies {
 
 ext {
     PUBLISH_GROUP_ID = 'io.bayat.android'
-    PUBLISH_VERSION = '1.0.8'
+    PUBLISH_VERSION = '1.0.9'
     PUBLISH_ARTIFACT_ID = 'social-sharing'
 }
 

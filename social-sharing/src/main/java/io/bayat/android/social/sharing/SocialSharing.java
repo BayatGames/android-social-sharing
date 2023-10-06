@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
+import android.provider.MediaStore;
 
 import androidx.annotation.Keep;
 import androidx.annotation.Nullable;
@@ -162,6 +163,7 @@ public class SocialSharing {
         @Keep
         protected Intent buildIntent() {
             Intent intent = new Intent();
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.DONUT && this.isMultiple != null && this.isMultiple) {
                 intent.setAction(Intent.ACTION_SEND_MULTIPLE);
                 if (this.uris != null && this.uris.size() > 0) {
@@ -177,8 +179,6 @@ public class SocialSharing {
                 intent.putExtra(Intent.EXTRA_TEXT, this.text);
             }
             if (this.useRichPreview) {
-                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-
                 if (this.title != null) {
                     intent.putExtra(Intent.EXTRA_TITLE, this.title);
                 }
