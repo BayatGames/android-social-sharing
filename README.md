@@ -194,8 +194,8 @@ Check the [LICENSE][license] file for more information.
 
 Made with ❤️ by [Bayat][bayat]
 
-[changelog]: ../blob/main/CHANGELOG.md
-[license]: ../blob/main/LICENSE
+[changelog]: CHANGELOG.md
+[license]: LICENSE
 [bayat]: https://bayat.io
 [hasanbayat]: https://github.com/hasanbayatme
 [bayatgames]: https://github.com/BayatGames
