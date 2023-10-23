@@ -46,7 +46,7 @@ jobs:
 
         # Runs upload, and then closes & releases the repository
       - name: Publish to Mavel Central and GitHub Packages
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/gradle-build-action@v2.4.2
         with:
           arguments: publishReleasePublicationToGitHubPackagesRepository publishReleasePublicationToSonatypeRepository closeAndReleaseSonatypeStagingRepository --continue
         env:
